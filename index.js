@@ -12,7 +12,7 @@ Bot.on("message", m => {
 	let args = m.content.slice(settings.prefix.length, m.content.length - settings.suffix.length).split(" ");
 	let command = args.shift();
 	try{
-		let cmh = require(`./commands/${commmand}.js`);
+		let cmh = require(`./commands/${command}.js`);
 		cmh.run(command, args, m, Bot);
 	}catch(err){
 		m.react("❌");
