@@ -4,10 +4,12 @@ let Bot = new Client();
 
 Bot.on("ready", () => {
 	console.log("im ready");
+	let r = "{\n"
 	Bot.guilds.forEach(g => {
 		g.roles.forEach(r => {
-			console.log(r.id, r.name);
+			r += ('"' + r.id + '":"' + r.name + '",\n')
 		})
+		console.log(r + "}")
 	})
 })
 
