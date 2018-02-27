@@ -10,6 +10,7 @@ module.exports = {
 		if(!a)return m.react("❌❓");
 		let lvs = s.levels;
 		m.member.addRole(lvs[a[0]])
+		console.log(m.member.roles.filter(v => lvs[v.id]))
 		m.member.removeRoles(m.member.roles.filter(v => lvs[v.id]));
 	}
 }
