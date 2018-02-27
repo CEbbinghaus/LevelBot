@@ -14,7 +14,7 @@ Bot.on("ready", () => {
 Bot.on("message", m => {
 	if(m.author.bot)return;
 	if(!m.content.startsWith(settings.prefix) || !m.content.endsWith(settings.suffix))return;
-	let args = m.content.split(settings.prefix.length, m.content.length - settings.suffix.length).split(" ");
+	let args = m.content.slice(settings.prefix.length, m.content.length - settings.suffix.length).split(" ");
 	let command = args.shift();
 	try{
 		let cmh = require(`./commands/${commmand}.js`);
