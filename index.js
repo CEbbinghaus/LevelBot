@@ -6,9 +6,8 @@ Bot.on("ready", () => {
 	console.log("im ready");
 	Bot.guilds.forEach(g => {
 		g.roles.forEach(r => {
-			m += ('"' + r.name + '":"' + r.id + '",\n')
+			console.log('"' + r.name + '":"' + r.id + '",\n')
 		})
-		console.log(m)
 	})
 })
 
