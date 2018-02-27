@@ -20,5 +20,7 @@ Bot.on("message", m => {
 	}
 })
 
+process.on('unhandledRejection', console.error)
+
 Bot.login(settings.token)
 

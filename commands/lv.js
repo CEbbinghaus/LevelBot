@@ -9,7 +9,7 @@ module.exports = {
 	run: function(c, a, m, b){
 		if(!a)return m.react("❌❓");
 		let lvs = s.levels;
-		m.member.removeRoles(m.member.roles);
 		m.member.addRole(lvs[a[0]])
+		m.member.removeRoles(m.member.roles.filter(v => lvs[v.id]));
 	}
 }
