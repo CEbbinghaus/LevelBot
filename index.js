@@ -1,5 +1,7 @@
 const settings = require("./settings.json");
 const {Client} = require("discord.js");
+const db = require("vsqlite");
+const dataBase = await new db("./databases").open("users.sqlite");
 let Bot = new Client();
 
 const handleMessage = m => {
@@ -26,6 +28,15 @@ Bot.on("message", m => {
 
 Bot.on("messageUpdate", (om, nm) => {
 	handleMessage(nm);
+})
+
+Bot.on("guildMemberAdd",async mem => {
+	let i = await mem.guild.fetchInvites()
+	let p = await dataBase.create("invites", {link: "https://discord.gg/cydyuW", uses: 1}, true);
+	let t = await dataBase.listTables().then(t => t.get("invites"));
+	console.log(t);
+	
+	i.map()
 })
 
 Bot.on("messageReactionAdd", (r, u) => {
