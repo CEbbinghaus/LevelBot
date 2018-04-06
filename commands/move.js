@@ -5,7 +5,8 @@ module.exports = {
 		cmd: "mv",
 		use: "mv [Mention of the person] [The level number you want to move to]",
 		extra : "the max level is 10",
-		perms: ["KICK_MEMBERS"]
+		perms: ["KICK_MEMBERS"],
+        devOnly: false
 	},
 	checkForErrors: function(a){
 		if(parseInt(a[0]) > 10)return "The Max Level is 10";

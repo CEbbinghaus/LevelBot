@@ -1,16 +1,19 @@
 const settings = require("./settings.json");
 const {Client} = require("discord.js");
 const db = require("vsqlite");
-const dataBase = await new db("./databases").open("users.sqlite");
 let Bot = new Client();
 
-const handleMessage = m => {
+const handleMessage =async m => {
 	if(m.author.bot)return;
 	if(!m.content.startsWith(settings.prefix) || !m.content.endsWith(settings.suffix))return;
+	let a = await Bot.fetchApplication()
 	let args = m.content.slice(settings.prefix.length, m.content.length - settings.suffix.length).split(" ");
 	let command = args.shift().toLowerCase();
 	try{
 		let cmh = require(`./commands/${command}.js`);
+		if(cmh.help.devOnly){
+			if(m.author.id != a.owner.id)return;
+		}
 		cmh.run(command, args, m, Bot);
 	}catch(err){
 		m.react("❌");
@@ -18,7 +21,8 @@ const handleMessage = m => {
 	}
 }
 
-Bot.on("ready", () => {
+Bot.on("ready", async () => {
+	var dataBase = await new db("./databases").open("users");
 	console.log("im ready");
 })
 
@@ -31,8 +35,8 @@ Bot.on("messageUpdate", (om, nm) => {
 })
 
 Bot.on("guildMemberAdd",async mem => {
+	console.log(dataBase)
 	let i = await mem.guild.fetchInvites()
-	let p = await dataBase.create("invites", {link: "https://discord.gg/cydyuW", uses: 1}, true);
 	let t = await dataBase.listTables().then(t => t.get("invites"));
 	console.log(t);
 	

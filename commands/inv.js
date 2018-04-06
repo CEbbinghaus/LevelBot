@@ -7,7 +7,8 @@ module.exports = {
 		cmd: "inv",
 		use: "inv",
 		extra : "",
-		perms: []
+		perms: [],
+        devOnly: false
 	},
 	checkForErrors: function(a){
 	},
@@ -15,10 +16,10 @@ module.exports = {
 		dataBase.open("users").then(async u => {
 			let invites = await m.guild.fetchInvites();
 			await u.create("invites", {uid: "301584737082802176", invite: "https://discord.gg/cydyuW", uses: 0}, true);
-			let t = u.tables.get("invites", {uid: m.author.id});
-			let registeredUsers = await t.read();
+			let t = await u.tables.get("invites");
+			let user = await t.read("invite", {uid: m.author.id});
 			if(t){
-				m.author.send("Your Invite url is: " + t[0].invite + "\n It has been used " + invites.find(inv => inv.url ==  t[0].invite).uses + " times");
+				m.author.send("Your Invite url is: " + user[0].invite + "\n It has been used " + invites.find(inv => inv.url ==  user[0].invite).uses + " times");
 			}else{
 				b.guilds.get("417654370105163785").channels.first().createInvite({unique: true, maxAge: 0}).then(i => {
 					t.write(['uid', 'invite'], [m.author.id.toString(), i.url]);

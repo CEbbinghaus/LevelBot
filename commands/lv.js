@@ -5,7 +5,8 @@ module.exports = {
 		cmd: "lv",
 		use: "lv [the level number you want to join]",
 		extra : "the max level is 10",
-		perms: []
+		perms: [],
+        devOnly: false
 	},
 	checkForErrors: function(a){
 		if(parseInt(a[0]) > 10)return "The Max Level is 10";
